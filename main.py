@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 print("Hello world!")
 
-time_step = np.linspace(0, 1, 1000)
+time_step = np.arange(0, 10, 0.001)
 theta_list = np.linspace(0, 4*np.pi, 1000)
 beta_list = np.array([-2, -1, -0.5, 0, 0.5, 1, 2])
 
@@ -13,7 +13,20 @@ def theta_model(theta, beta):
     return 1-np.cos(theta)+np.dot((1+np.cos(theta)),beta)
 
 def spike_rep(theta, definition = 1):
-   return (1-np.cos(theta))**definition
+    return (1-np.cos(theta))**definition
+
+def beta_model(beta):
+    return np.cos(beta*5*np.pi)/(5*np.pi)
+
+def dynamique(time_step, time_stop, theta_0, beta_0):
+  theta = np.array([theta_0])
+  beta = np.array([beta_0])
+  for i in range(time_stop/time_step):
+    Vtheta = theta_model(theta[i], beta[i])
+    Vbeta = beta_model(beta[i])
+    theta = np.concatenate((theta, theta[i]+Vtheta*time_step))
+    beta = np.concatenate((beta, beta[i]+Vbeta*time_step))
+  return theta, beta
 
 
 plt.figure(figsize=(10, 6))
