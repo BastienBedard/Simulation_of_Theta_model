@@ -7,7 +7,7 @@ from math import factorial as facto
 import time
 rng = np.random.default_rng(seed=420)  # use Generator API
 
-
+from Functions_lib.Complete_dynamics import spike_rep
 
 # Définition des fonctions
 
@@ -17,8 +17,8 @@ def theta_model(theta:np.ndarray, beta:np.ndarray):
 def theta_model_scipy_solver(t, y:np.ndarray, beta, A:np.ndarray, n:int, beta_0:float, kappa:float):
     return 1-np.cos(y)+np.multiply(1+np.cos(y), beta(np.array([y]).T, A, n, beta_0, kappa).T[0])
 
-def spike_rep(theta:np.ndarray, n = 2):
-   return (1-np.cos(theta))**n
+# def spike_rep(theta:np.ndarray, n = 2):
+#    return (1-np.cos(theta))**n
 
 def beta_Vconst(beta:float, beta_switch:bool, beta_low:float = -0.01, beta_high:float = 0.01):
     if beta >= 0.2:
@@ -215,10 +215,10 @@ def fig_3D(kappas:list, n_list:list, R_map:np.ndarray,
 
 
     # Dynamique N neurone theta.
-size = 100
+size = 60
 euler = 0
 scipy = 1
-mean = 100
+mean = 2
 
 kappas = [1, 5, 10, 15, 20]#, 15, 20, 30
 # kappas = [2, 5, 10]
